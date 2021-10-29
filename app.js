@@ -31,7 +31,7 @@ app.get('/getpic/:id', (req, res) => {
   })
 })
 
-                    // 对应name叫做file的
+// 对应name叫做file的
 app.post('/addpic', upload.single('file'), (req, res) => {
   //连接数据库
   const connection = mysql.createConnection({
