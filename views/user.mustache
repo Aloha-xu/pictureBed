@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>waterfall flow</title>
+</head>
+
+<body>
+	<h2>This is a user upload picture Papg</h2>
+	<div id="drop_area" style="border:3px dashed silver;width:200px; height:200px">将图片拖拽到此</div>
+	<form action="http://localhost:3003/addpic" enctype="multipart/form-data" name="file" method="post" id="test">
+		<input type="file" name="file" accept="image/png,image/jpeg" onchange="uploadImg()" id="personsFile"></input>
+		<button type="submit" >提交</button>
+	</form>
+
+</body>
+<script type="text/javascript">
+	//阻止浏览器的默认打开行为
+	document.addEventListener("drop", function (e) {  //拖离   
+		e.preventDefault();
+	})
+	document.addEventListener("dragleave", function (e) {  //拖后放   
+		e.preventDefault();
+	})
+	document.addEventListener("dragenter", function (e) {  //拖进  
+		e.preventDefault();
+	})
+	document.addEventListener("dragover", function (e) {  //拖来拖去    
+		e.preventDefault();
+	})
+	var box = document.getElementById('drop_area'); //拖拽区域    
+	//文件拖拽上传
+	box.addEventListener("drop", function (e) {
+		var _name, _fileName, personsFile;
+		personsFile = document.getElementById("personsFile");
+		personsFile.files = e.dataTransfer.files; //获取传入的文件对象
+		//检测是否是拖拽文件到页面的操作            
+		if (personsFile.files.length == 0) {
+			return false;
+		}
+		_name = personsFile.value;
+		_fileName = _name.substring(_name.lastIndexOf(".") + 1).toLowerCase();
+		if (_fileName !== "png" && _fileName !== "jpg") {
+			alert("上传图片格式不正确，请重新上传");
+			window.location.reload()
+		} else {
+			var str = "<img width='200px' height='200px' src='" + window.URL.createObjectURL(personsFile.files[0]) + "'>";
+			document.getElementById('drop_area').innerHTML = str;
+		}
+	}, false);
+
+	//文件点击上传
+	function uploadImg() {
+		var _name, _fileName, personsFile;
+		personsFile = document.getElementById("personsFile");
+		_name = personsFile.value;
+		_fileName = _name.substring(_name.lastIndexOf(".") + 1).toLowerCase();
+		if (_fileName !== "png" && _fileName !== "jpg") {
+			alert("上传图片格式不正确，请重新上传");
+			window.location.reload()
+		} else {
+			var str = "<img width='200px' height='200px' src='" + window.URL.createObjectURL(personsFile.files[0]) + "'>";
+			document.getElementById('drop_area').innerHTML = str;
+		}
+	}
+</script>
+
+</html>
